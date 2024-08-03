@@ -208,6 +208,7 @@ export const getSearchedProducts = (address, key) => async (dispatch) => {
     }
 }
 
+// underControl Implemented
 export const underControl = () => {
     return {
       type: 'RESET_FLAGS',

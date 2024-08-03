@@ -33,13 +33,6 @@ const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    React.useEffect(() => {
-        if (currentRole === "Customer") {
-            console.log(currentUser);
-            dispatch(updateCustomer(currentUser, currentUser._id));
-        }
-    }, [currentRole, currentUser, dispatch, anchorElNav]);
-
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [anchorElSign, setAnchorElSign] = React.useState(null);
@@ -48,6 +41,13 @@ const Navbar = () => {
     const openSign = Boolean(anchorElSign);
 
     const [isCartOpen, setIsCartOpen] = React.useState(false);
+
+    React.useEffect(() => {
+        if (currentRole === "Customer" && currentUser) {
+            console.log(currentUser);
+            dispatch(updateCustomer(currentUser, currentUser._id));
+        }
+    }, [currentRole, currentUser, dispatch]);
 
     // Cart
     const handleOpenCart = () => {
@@ -58,7 +58,6 @@ const Navbar = () => {
         setIsCartOpen(false);
     };
 
-    // Navigation Menu
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };

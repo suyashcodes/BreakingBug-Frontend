@@ -1,11 +1,11 @@
+import React from "react";
 import { Divider, Box, Typography, Button, styled, Container } from '@mui/material';
-
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom'; // Updated import statement
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 
 const Slide = ({ products, title }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
         <Component>
@@ -14,7 +14,7 @@ const Slide = ({ products, title }) => {
 
                 <ViewAllButton
                     variant="contained"
-                    onClick={() => { navigate("/Products") }}
+                    onClick={() => { navigate("/Products"); }}
                 >
                     View All
                 </ViewAllButton>
@@ -53,8 +53,8 @@ const Slide = ({ products, title }) => {
                 }
             </Carousel>
         </Component>
-    )
-}
+    );
+};
 
 export default Slide;
 
@@ -81,14 +81,14 @@ const Component = styled(Box)`
 const Deal = styled(Box)`
     display: flex;    
     padding: 15px 20px;
-`
+`;
 
 const DealText = styled(Typography)`
     font-size: 22px;
     font-weight: 600;
     line-height: 32px;
     margin-right: 25px;
-`
+`;
 
 const ViewAllButton = styled(Button)`
     margin-left: auto;
@@ -103,7 +103,7 @@ const ViewAllButton = styled(Button)`
 const Image = styled('img')({
     width: 'auto',
     height: 150
-})
+});
 
 const TitleText = styled(Typography)`
     font-size: 14px;
@@ -115,8 +115,8 @@ const TitleText = styled(Typography)`
 
 const Text = styled(Typography)`
     font-size: 14px;
-    margin-top: 5px
-`
+    margin-top: 5px;
+`;
 
 const TextContainer = styled(Container)`
     display: flex;

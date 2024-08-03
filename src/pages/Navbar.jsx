@@ -17,7 +17,7 @@ import { Login, Logout, Shop2, Store } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, Badge, Divider, Drawer, ListItemIcon } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { styled } from 'styled-components';
+import { styled } from '@mui/material/styles';
 import { NavLogo } from '../utils/styles';
 
 import Cart from './customer/components/Cart';
@@ -30,7 +30,7 @@ const Navbar = () => {
 
     const totalQuantity = currentUser && currentUser.cartDetails && 0;
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     React.useEffect(() => {
@@ -38,7 +38,7 @@ const Navbar = () => {
             console.log(currentUser);
             dispatch(updateCustomer(currentUser, currentUser._id));
         }
-    }, [currentRole, currentUser, dispatch, ancorElNav])
+    }, [currentRole, currentUser, dispatch, anchorElNav]);
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -50,11 +50,11 @@ const Navbar = () => {
     const [isCartOpen, setIsCartOpen] = React.useState(false);
 
     // Cart
-    const handleOpen Cart = () => {
+    const handleOpenCart = () => {
         setIsCartOpen(true);
     };
 
-    const handleOpenCart = () => {
+    const handleCloseCart = () => {
         setIsCartOpen(false);
     };
 
@@ -86,7 +86,7 @@ const Navbar = () => {
     };
 
     const homeHandler = () => {
-        navigate("/")
+        navigate("/");
     };
 
     return (
@@ -164,7 +164,6 @@ const Navbar = () => {
                                         horizontal: 'left',
                                     }}
                                     open={Boolean(anchorElNav)}
-                                  
                                     onClick={handleCloseUserMenu}
                                     sx={{
                                         display: { xs: 'block', md: 'none' },
@@ -302,86 +301,47 @@ const Navbar = () => {
                                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                             >
-                                <MenuItem onClick={() => navigate("/Profile")}>
-                                    <Avatar />
-                                    <Link to="/Profile">
-                                        Profile
-                                    </Link>
-                                </MenuItem>
-                                <MenuItem onClick={() => navigate("/Orders")}>
-                                    <ListItemIcon>
-                                        <Shop2 fontSize="small" />
-                                    </ListItemIcon>
-                                    <Link to="/Orders">
-                                        My Orders
-                                    </Link>
+                                <MenuItem onClick={() => navigate("/customerprofile")}>
+                                    <Typography textAlign="center">Profile</Typography>
                                 </MenuItem>
                                 <Divider />
-                                <MenuItem onClick={() => navigate("/Logout")}>
-                                    <ListItemIcon>
-                                        <Logout fontSize="small" />
-                                    </ListItemIcon>
-                                    <Link to="/Logout">
-                                        Logout
-                                    </Link>
+                                <MenuItem onClick={() => {
+                                    navigate("/product")
+                                    dispatch({ type: 'LOGOUT' });
+                                    handleCloseUserMenu();
+                                }}>
+                                    <Typography textAlign="center">Logout</Typography>
                                 </MenuItem>
                             </Menu>
                         </Box>
                     }
-
                 </Toolbar>
             </Container>
 
-            {
-                isCartOpen &&
-                <Drawer
-                    anchor="right"
-                    open={isCartOpen}
-                    onClose={handleCloseCart}
-                    sx={{
-                        width: '400px',
-                        flexShrink: 0,
-                        '& .MuiDrawer-paper': {
-                            width: '400px',
-                            boxSizing: 'border-box',
-                        },
-                    }}
-                >
-                    <Cart setIsCartOpen={setIsCartOpen} />
-                </Drawer>
-            }
-        </AppBar >
+            <Drawer
+                anchor="right"
+                open={isCartOpen}
+                onClose={handleCloseCart}
+                sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            >
+                <Cart handleCloseCart={handleCloseCart} />
+            </Drawer>
+        </AppBar>
     );
-}
-export default Navbar;
+};
 
-const HomeContainer = styled.div`
-  display: flex;
-  cursor:pointer;
-`;
+const HomeContainer = styled('div')(({ theme }) => ({
+    flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
+}));
 
 const styles = {
     styledPaper: {
-        overflow: 'visible',
-        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-        mt: 1.5,
-        '& .MuiAvatar-root': {
-            width: 32,
-            height: 32,
-            ml: -0.5,
-            mr: 1,
-        },
-        '&:before': {
-            content: '""',
-            display: 'block',
-            position: 'absolute',
-            top: 0,
-            right: 14,
-            width: 10,
-            height: 10,
-            bgcolor: 'background.paper',
-            transform: 'translateY(-50%) rotate(45deg)',
-            zIndex: 0,
-        },
-    }
-}
+        borderRadius: '10px',
+        width: 250,
+        height: 'auto',
+    },
+};
+
+export default Navbar;

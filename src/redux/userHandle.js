@@ -207,3 +207,9 @@ export const getSearchedProducts = (address, key) => async (dispatch) => {
         dispatch(getError(error));
     }
 }
+
+export const underControl = () => {
+    return {
+      type: 'RESET_FLAGS',
+    };
+  };

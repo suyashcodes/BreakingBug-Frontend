@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 const SalesChart = ({  }) => {
 
     const navigate = useNavigate();
+    const chartType = 'line'; //  the chart type is defined here
 
     return (
         <Card sx={{ backgroundImage: "linear-gradient(320deg, rgb(58 163 171 / 32%) 0%, rgb(8 23 198 / 32%) 100%)" }}>
@@ -40,7 +41,7 @@ const SalesChart = ({  }) => {
                 <ResponsiveChart
                     options={ChartDatabyYear.options}
                     series={ChartDatabyYear.series}
-                    type={type}
+                    type={chartType} // the chart type passed here
                 />
             </CardContent>
 

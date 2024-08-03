@@ -26,6 +26,7 @@ import {
     updateCurrentUser,
 } from './userSlice';
 
+
 export const authUser = (fields, role, mode) => async (dispatch) => {
     dispatch(authRequest());
 

@@ -12,22 +12,28 @@ const Home = () => {
   const adURL =
     'https://rukminim1.flixcart.com/flap/464/708/image/1f03e99f6dc9f7a6.jpg?q=70';
 
+  // Initialize dispatch with useDispatch hook
   const dispatch = useDispatch();
 
+  // Get product data, response products, and error from Redux state
   const { productData, responseProducts, error } = useSelector((state) => state.user);
 
+  // Initialize showNetworkError state with false
   const [showNetworkError, setShowNetworkError] = useState(false);
 
+  // Use useEffect to dispatch getProducts action when component mounts
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
+  // Use useEffect to show network error after 40 seconds if error occurs
   useEffect(() => {
     if (error) {
       const timeoutId = setTimeout(() => {
         setShowNetworkError(true);
       }, 40000);
 
+      // Clear timeout when component unmounts
       return () => clearTimeout(timeoutId);
     }
   }, [error]);
@@ -54,8 +60,9 @@ const Home = () => {
           <h1>Sorry, network error.</h1>
         </StyledContainer>
       ) : error ? (
+        // Display meaningful error message instead of "Please Wait A Second"
         <StyledContainer>
-          <h1>Please Wait A Second</h1>
+          <h1>Error: {error.message}</h1>
           <NewtonsCradle size={70} speed={1.4} color="black" />
         </StyledContainer>
       ) : (

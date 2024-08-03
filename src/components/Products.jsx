@@ -10,17 +10,20 @@ import { addStuff } from '../redux/userHandle';
 
 const Products = ({}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize navigate with useNavigate hook
 
   const itemsPerPage = 9;
 
-  const { currentRole, responseSearch } = useSelector();
+  const { currentRole, responseSearch } = useSelector((state) => state.user); // Specify state slice in useSelector hook
   const [currentPage, setCurrentPage] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
 
+  const productData = responseSearch; // Initialize productData with responseSearch
+
   const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem + itemsPerPage;
-  const currentItems = (indexOfFirstItem, indexOfLastItem);
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage; // Correct calculation of indexOfFirstItem
+  const currentItems = productData.slice(indexOfFirstItem, indexOfLastItem); // Use slice method to get current items
 
   const handleAddToCart = (event, product) => {
     event.stopPropagation();
@@ -37,6 +40,10 @@ const Products = ({}) => {
     event.stopPropagation();
     setMessage("You have to login or register first")
     setShowPopup(true)
+  };
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
   };
 
   if (!responseSearch) {
@@ -89,7 +96,7 @@ const Products = ({}) => {
           count={Math.ceil(productData.length / itemsPerPage)}
           page={currentPage}
           color="secondary"
-
+          onChange={handlePageChange} // Add onChange event handler
         />
       </Container>
 

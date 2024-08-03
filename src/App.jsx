@@ -7,7 +7,7 @@ import AuthenticationPage from './pages/AuthenticationPage'
 import SellerDashboard from './pages/seller/SellerDashboard'
 import CustomerSearch from './pages/customer/pages/CustomerSearch'
 import Products from './components/Products';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react'; // Added useState import
 import { getProducts } from './redux/userHandle';
 import CustomerOrders from './pages/customer/pages/CustomerOrders';
 import CheckoutSteps from './pages/customer/pages/CheckoutSteps';
@@ -23,12 +23,19 @@ const App = () => {
 
   const { isLoggedIn, currentToken, currentRole, productData } = useSelector(state => state.user);
 
-  useEffect(() =>
-     {
+  const [error, setError] = useState(null); // Added error state
 
+  useEffect(() => {
+    try {
+      dispatch(isTokenValid());
+    } catch (error) {
+      setError(error); // Caught and set error
+    }
+  }, [dispatch]);
 
-    dispatch(isTokenValid());
-  }, [dispatch]); 
+  if (error) {
+    return <div>Error: {error.message}</div>; // Render error message
+  }
 
   return (
     <BrowserRouter>
@@ -73,13 +80,6 @@ const App = () => {
             <Route path="/ProductSearch" element={<CustomerSearch mode="Desktop" />} />
 
             <Route path="/Checkout" element={<CheckoutSteps />} />
-            <Route path="/product/buy/:id" element={<CheckoutSteps />} />
-            <Route path="/Aftermath" element={<CheckoutAftermath />} />
-
-            <Route path="/Profile" element={<Profile />} />
-            <Route path="/Orders" element={<CustomerOrders />} />
-            <Route path="/order/view/:id" element={<ViewOrder />} />
-            <Route path="/Logout" element={<Logout />} />
           </Routes>
         </>
       }

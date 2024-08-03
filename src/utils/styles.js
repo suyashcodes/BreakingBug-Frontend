@@ -5,6 +5,7 @@ import {
     tableCellClasses,
     Drawer as MuiDrawer,
     AppBar as MuiAppBar,
+    Button,  // Button Imported
 } from "@mui/material";
 import { Link } from "react-scroll";
 
@@ -76,4 +77,19 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
 
 export const NavLogo = styled(Link)`
     display: flex;
+`;
+// LightPurpleButton  is created and exported
+export const LightPurpleButton = styled(Button)`
+    background-color: lightpurple;
+    &:hover {
+        background-color: purple;
+    }
+`;
+
+// BasicButton is created and exported
+export const BasicButton = styled(Button)`
+    background-color: lightgray;
+    &:hover {
+        background-color: gray;
+    }
 `;
